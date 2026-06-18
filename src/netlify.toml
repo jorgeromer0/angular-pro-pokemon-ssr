@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build:ssr"
+  publish = "dist/pokemon-ssr/browser"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/ssr"
+  status = 200
