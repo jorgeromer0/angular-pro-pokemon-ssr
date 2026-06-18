@@ -7,9 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:pokemon-ssr": "node dist/pokemon-ssr/server/server.mjs",
-    "build:ssr": "ng build && ng run pokemon-ssr:server",
-    "serve:ssr": "ng run pokemon-ssr:serve-ssr"
+    "build:ssr": "ng build",
+    "serve:ssr": "node dist/pokemon-ssr/server/server.mjs"
   },
   "private": true,
   "packageManager": "npm@10.9.3",
