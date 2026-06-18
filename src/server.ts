@@ -1,36 +1,30 @@
+import { AngularAppEngine, createRequestHandler } from '@angular/ssr';
 import {
-  AngularNodeAppEngine,
-  writeResponseToNodeResponse,
-} from '@angular/ssr/node';
-import express from 'express';
-import { join } from 'node:path';
-import serverless from 'serverless-http';
+  getAllowedHosts,
+  getContext,
+  getTrustProxyHeaders,
+} from '@netlify/angular-runtime/app-engine.js';
 
-const browserDistFolder = join(import.meta.dirname, '../browser');
-const app = express();
-const angularApp = new AngularNodeAppEngine();
-
-// Ejemplo de endpoint API
-app.get('/api/hello', (req, res) => {
-  res.json({ message: 'Hola desde Netlify API' });
+const angularAppEngine = new AngularAppEngine({
+  allowedHosts: getAllowedHosts(),
+  trustProxyHeaders: getTrustProxyHeaders(),
 });
 
-// Archivos estáticos
-app.use(
-  express.static(browserDistFolder, {
-    maxAge: '1y',
-    index: false,
-    redirect: false,
-  }),
-);
+export async function netlifyAppEngineHandler(request: Request): Promise<Response> {
+  const context = getContext();
 
-// SSR Angular
-app.use((req, res, next) => {
-  angularApp
-    .handle(req)
-    .then((response) => (response ? writeResponseToNodeResponse(response, res) : next()))
-    .catch(next);
-});
+  const pathname = new URL(request.url).pathname;
 
-// Exportar handler compatible con Netlify
-export const handler = serverless(app);
+  // Endpoint de ejemplo
+  if (pathname === '/api/hello') {
+    return Response.json({ message: 'Hola desde Netlify API' });
+  }
+
+  const result = await angularAppEngine.handle(request, context);
+  return result || new Response('Not found', { status: 404 });
+}
+
+/**
+ * The request handler used by the Angular CLI (dev-server and during build).
+ */
+export const reqHandler = createRequestHandler(netlifyAppEngineHandler);
