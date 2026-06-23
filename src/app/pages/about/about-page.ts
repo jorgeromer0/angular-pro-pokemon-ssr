@@ -14,8 +14,8 @@ export default class AboutPage implements OnInit {
 
     ngOnInit(): void {
     this.title.setTitle('About Page')
-    this.meta.updateTag({name: 'descripcion', content: 'Este es mi About Page'});
+    this.meta.updateTag({name: 'description', content: 'Este es mi About Page'});
     this.meta.updateTag({name: 'og:title', content: 'About Page'});
-    this.meta.updateTag({name: 'keyboard', content: 'Hola,Mundo,Ferranado,Herrera,Angular,PRO'});
+    this.meta.updateTag({name: 'keyboards', content: 'Hola,Mundo,Ferranado,Herrera,Angular,PRO'});
   }
 }
