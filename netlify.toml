@@ -1,6 +1,5 @@
 [build]
-  base = "02-pokemon-ssr"
-  command = "npm run build:ssr"
+  command = "npm ci && npm run build:ssr"
   publish = "dist/pokemon-ssr/browser"
   functions = "netlify/functions"
 
@@ -11,3 +10,4 @@
   from = "/"
   to = "/about"
   status = 302
+
