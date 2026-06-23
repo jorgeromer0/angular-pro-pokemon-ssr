@@ -3,6 +3,9 @@
   publish = "dist/pokemon-ssr/browser"
   functions = "netlify/functions"
 
+[build.environment]
+  NODE_VERSION = "22.22.0"
+
 [functions]
   node_bundler = "esbuild"
 
